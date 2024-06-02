@@ -5,9 +5,10 @@
 package TiempoEnAndalucia;
 
 import TiempoEnAndalucia.Controllers.InternationalizationManager;
+import TiempoEnAndalucia.Controllers.JsonHandler;
+import TiempoEnAndalucia.Controllers.SessionManager;
 
 import javax.swing.*;
-import java.awt.*;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -149,7 +150,24 @@ public class Contacto extends JFrame {
         botonValorar.setBackground(new Color(243, 243, 243));
         botonValorar.setBounds(230, 440, 250, 60);
         panelDerecha.add(botonValorar);
-
+        botonEnviar.addActionListener(e -> {
+            Usuario loggedInUser;
+            if (SessionManager.getInstance().isLoggedIn()) {
+                loggedInUser = SessionManager.getInstance().getLoggedInUser();
+            } else {
+                JOptionPane.showMessageDialog(null, bundle.getString("ErrorLogueado"), "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (textAreaDuda.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, bundle.getString("ErrorIngresaComent"), "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            // Crear un nuevo objeto Usuario con la valoración y el comentario
+            Usuario usuario_aux = new Usuario(loggedInUser.getUsuario(), loggedInUser.getUsuario(), 0, textAreaDuda.getText());
+            // Escribir el usuario en el archivo JSON
+            JsonHandler.escribirUsuario(usuario_aux, 2);
+            JOptionPane.showMessageDialog(null, bundle.getString("ExitoValoracion")+ usuario_aux.getUsuario());
+        });
         botonValorar.addActionListener(e -> {
 
             dispose(); // Cerrar la ventana actual

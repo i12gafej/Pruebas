@@ -18,6 +18,7 @@ public class PronosticoTiempo extends JFrame {
 
     private List<Pronostico> pronosticos;
     private String provincia;
+    private JPanel selectedDayPanel;
 
     public PronosticoTiempo(String provincia) {
         this.provincia = provincia;
@@ -104,7 +105,12 @@ public class PronosticoTiempo extends JFrame {
 
         for (int i = 0; i < 7; i++) {
             JPanel diaPanel = new JPanel(null);
-            diaPanel.setBackground(Color.white);
+            if(i == 0) {
+                diaPanel.setBackground(new Color(0xC9, 0xFC, 0xF5));
+                selectedDayPanel = diaPanel; // El primer día está seleccionado inicialmente
+            } else {
+                diaPanel.setBackground(Color.white);
+            }
             diaPanel.setBorder(BorderFactory.createLineBorder(Color.black, 2));
             diaPanel.setBounds(i * 150, 10, 140, 270);
 
@@ -137,6 +143,14 @@ public class PronosticoTiempo extends JFrame {
             diaPanel.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
+                    // Cambiar el fondo del día anteriormente seleccionado a blanco
+                    if (selectedDayPanel != null) {
+                        selectedDayPanel.setBackground(Color.white);
+                    }
+
+                    // Establecer el nuevo día seleccionado
+                    selectedDayPanel = diaPanel;
+                    diaPanel.setBackground(new Color(0xC9, 0xFC, 0xF5));
                     int index = panelDias.getComponentZOrder(diaPanel);
                     if (index >= 0 && index < pronosticos.size()) {
                         cargarPronosticosHoras(pronosticos.get(index).getPronosticosHoras());

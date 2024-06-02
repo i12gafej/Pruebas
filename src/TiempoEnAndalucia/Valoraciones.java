@@ -15,12 +15,15 @@ import TiempoEnAndalucia.Controllers.SessionManager;
 
 public class Valoraciones extends JFrame {
     private int valoracion = 0; // Valor inicial de la valoración
+    private JTextPane textPane;
+
 
     public Valoraciones() {
         initComponents();
     }
 
     private void initComponents() {
+        InternationalizationManager.setLocale(new Locale("en", "GB"));
         ResourceBundle bundle = InternationalizationManager.getResourceBundle();
         setTitle(bundle.getString("Valoraciones"));
         setSize(1483, 797);
@@ -116,7 +119,7 @@ public class Valoraciones extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 Usuario loggedInUser = null;
                 String comentario = textAreaComentario.getText();
-                if (TiempoEnAndalucia.SessionManager.getInstance().isLoggedIn()) {
+                if (SessionManager.getInstance().isLoggedIn()) {
                     loggedInUser = SessionManager.getInstance().getLoggedInUser();
                 } else {
                     JOptionPane.showMessageDialog(null, bundle.getString("ErrorLogueado"), "Error", JOptionPane.ERROR_MESSAGE);
@@ -127,11 +130,20 @@ public class Valoraciones extends JFrame {
                     return;
                 }
                 // Crear un nuevo objeto Usuario con la valoración y el comentario
-                Usuario usuario = new Usuario(loggedInUser.getUsuario(), loggedInUser.getUsuario(), valoracion, comentario);
+                Usuario usuario_aux = new Usuario(loggedInUser.getUsuario(), loggedInUser.getUsuario(), valoracion, comentario);
+                String estrellas = bundle.getString("Estrellas");
                 valoracion = 0;
                 // Escribir el usuario en el archivo JSON
-                JsonHandler.escribirUsuario(usuario);
-                JOptionPane.showMessageDialog(null, bundle.getString("ExitoValoracion")+ usuario.getUsuario());
+                JsonHandler.escribirUsuario(usuario_aux, 1);
+                StringBuilder texto = new StringBuilder("<html><body style='font-family: Liberation Sans; font-size:18px;'>");
+                for (Usuario usuario : JsonHandler.leerUsuarios(1)) {
+                    texto.append("<b>").append(usuario.getUsuario()).append(", ")
+                            .append(usuario.getValoracion()).append(" ").append(estrellas).append("</b><br/><br/>");
+                    texto.append(usuario.getComentario()).append("<br/><br/>");
+                }
+                texto.append("</body></html>");
+                textPane.setText(texto.toString());
+                JOptionPane.showMessageDialog(null, bundle.getString("ExitoValoracion")+ usuario_aux.getUsuario());
             }
         });
 
@@ -177,7 +189,7 @@ public class Valoraciones extends JFrame {
         gbc.insets = new Insets(10, 10, 10, 10);
 
         // Crear un área de texto no editable
-        JTextPane textPane = new JTextPane();
+        textPane = new JTextPane();
         textPane.setContentType("text/html");
         textPane.setOpaque(false);
         textPane.setEditable(false);
@@ -185,7 +197,7 @@ public class Valoraciones extends JFrame {
 
         // Leer usuarios y añadir al texto
         StringBuilder texto = new StringBuilder("<html><body style='font-family: Liberation Sans; font-size:18px;'>");
-        for (Usuario usuario : JsonHandler.leerUsuarios()) {
+        for (Usuario usuario : JsonHandler.leerUsuarios(1)) {
             texto.append("<b>").append(usuario.getUsuario()).append(", ")
                     .append(usuario.getValoracion()).append(" ").append(estrellas).append("</b><br/><br/>");
             texto.append(usuario.getComentario()).append("<br/><br/>");

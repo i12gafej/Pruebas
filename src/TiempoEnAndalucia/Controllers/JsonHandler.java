@@ -14,11 +14,17 @@ import java.util.logging.Logger;
 
 public class JsonHandler {
     private static final Logger logger = Logger.getLogger(JsonHandler.class.getName());
-    private static final String nombreArchivo = "valoraciones.json";
+    private static final String nombreArchivo_valoraciones = "valoraciones.json";
+    private static final String nombreArchivo_contactanos = "contactanos.json";
 
-    public static void escribirUsuario(Usuario usuario) {
+
+    public static void escribirUsuario(Usuario usuario, int tipo) {
         JSONObject rootObject;
-
+        String nombreArchivo;
+        if (tipo == 1){
+            nombreArchivo  = nombreArchivo_valoraciones;
+        }
+        else{nombreArchivo = nombreArchivo_contactanos;}
         // Intenta leer el archivo existente o inicializa un nuevo JSONObject si no existe
         try {
             File file = new File(nombreArchivo);
@@ -32,7 +38,7 @@ public class JsonHandler {
             }
 
             JSONObject usuarioObject = new JSONObject();
-            usuarioObject.put("Valoracion", usuario.getValoracion());
+            if (tipo == 1) {usuarioObject.put("Valoracion", usuario.getValoracion());}
             usuarioObject.put("Texto", usuario.getComentario());
 
             // Insertar o actualizar el usuario en el JSONObject raíz
@@ -47,17 +53,26 @@ public class JsonHandler {
         }
     }
 
-    public static List<Usuario> leerUsuarios() {
+    public static List<Usuario> leerUsuarios(int tipo) {
         List<Usuario> usuarios = new ArrayList<>();
+        String nombreArchivo;
+        if (tipo == 1){
+            nombreArchivo  = nombreArchivo_valoraciones;
+        }
+        else{nombreArchivo = nombreArchivo_contactanos;}
         try {
             String contenido = new String(Files.readAllBytes(Paths.get(nombreArchivo)));
             JSONObject jsonObject = new JSONObject(contenido);
 
             for (String nombre : jsonObject.keySet()) {
                 JSONObject usuarioObject = jsonObject.getJSONObject(nombre);
-                int valoracion = usuarioObject.getInt("Valoracion");
+                int valoracion=0;
+                if (tipo == 1) {valoracion = usuarioObject.getInt("Valoracion");}
+
                 String texto = usuarioObject.getString("Texto");
-                usuarios.add(new Usuario(nombre,"", valoracion, texto));
+                if (tipo == 1){usuarios.add(new Usuario(nombre,"", valoracion, texto));}
+                else{usuarios.add(new Usuario(nombre,"", texto));
+                }
             }
         } catch (IOException | JSONException e) {
             logger.log(Level.SEVERE, "Error al leer el archivo JSON", e);
