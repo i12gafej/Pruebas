@@ -1,0 +1,138 @@
+[
+    {
+        "ciudad": "Almería",
+        "fecha": "1 junio",
+        "puntuacion": "AireReg",
+        "polen": {
+            "resultado": 17,
+            "nivel": "Bajo"
+        },
+        "O3": {
+            "resultado": 18,
+            "nivel": "Bajo"
+        },
+        "Calima": {
+            "resultado": 96,
+            "nivel": "Extremo"
+        }
+    },
+    {
+        "ciudad": "Cádiz",
+        "fecha": "1 junio",
+        "puntuacion": "AireBueno",
+        "polen": {
+            "resultado": 37,
+            "nivel": "Bajo"
+        },
+        "O3": {
+            "resultado": 49,
+            "nivel": "Moderado"
+        },
+        "Calima": {
+            "resultado": 17,
+            "nivel": "Bajo"
+        }
+    },
+    {
+        "ciudad": "Córdoba",
+        "fecha": "1 junio",
+        "puntuacion": "AireBueno",
+        "polen": {
+            "resultado": 72,
+            "nivel": "Alto"
+        },
+        "O3": {
+            "resultado": 6,
+            "nivel": "Bajo"
+        },
+        "Calima": {
+            "resultado": 9,
+            "nivel": "Bajo"
+        }
+    },
+    {
+        "ciudad": "Granada",
+        "fecha": "1 junio",
+        "puntuacion": "AireBueno",
+        "polen": {
+            "resultado": 16,
+            "nivel": "Bajo"
+        },
+        "O3": {
+            "resultado": 22,
+            "nivel": "Bajo"
+        },
+        "Calima": {
+            "resultado": 32,
+            "nivel": "Bajo"
+        }
+    },
+    {
+        "ciudad": "Huelva",
+        "fecha": "1 junio",
+        "puntuacion": "AireBueno",
+        "polen": {
+            "resultado": 6,
+            "nivel": "Bajo"
+        },
+        "O3": {
+            "resultado": 53,
+            "nivel": "Moderado"
+        },
+        "Calima": {
+            "resultado": 47,
+            "nivel": "Moderado"
+        }
+    },
+    {
+        "ciudad": "Jaén",
+        "fecha": "1 junio",
+        "puntuacion": "AireBueno",
+        "polen": {
+            "resultado": 25,
+            "nivel": "Bajo"
+        },
+        "O3": {
+            "resultado": 19,
+            "nivel": "Bajo"
+        },
+        "Calima": {
+            "resultado": 20,
+            "nivel": "Bajo"
+        }
+    },
+    {
+        "ciudad": "Málaga",
+        "fecha": "1 junio",
+        "puntuacion": "AireReg",
+        "polen": {
+            "resultado": 47,
+            "nivel": "Moderado"
+        },
+        "O3": {
+            "resultado": 34,
+            "nivel": "Bajo"
+        },
+        "Calima": {
+            "resultado": 78,
+            "nivel": "Alto"
+        }
+    },
+    {
+        "ciudad": "Sevilla",
+        "fecha": "1 junio",
+        "puntuacion": "AireBueno",
+        "polen": {
+            "resultado": 46,
+            "nivel": "Moderado"
+        },
+        "O3": {
+            "resultado": 18,
+            "nivel": "Bajo"
+        },
+        "Calima": {
+            "resultado": 48,
+            "nivel": "Moderado"
+        }
+    }
+]
